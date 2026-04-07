@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const featuredMenus = [
@@ -21,6 +22,13 @@ const stores = [
 ]
 
 export default function Home() {
+  const [showSpecial, setShowSpecial] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSpecial(true), 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <>
       {/* Hero */}
@@ -50,6 +58,24 @@ export default function Home() {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* 本日のおすすめ（JS遅延描画） */}
+      <section className="max-w-5xl mx-auto px-4 py-10">
+        <h2 className="text-2xl font-bold text-amber-800 mb-4 text-center">本日のおすすめ</h2>
+        {showSpecial && (
+          <div className="bg-amber-50 rounded-xl p-6 text-center shadow">
+            <p className="text-lg font-semibold text-gray-800">本日のおすすめ：季節の天ぷら定食</p>
+            <p className="text-amber-700 font-bold text-xl mt-2">¥980</p>
+            <p className="text-gray-500 text-sm mt-2">旬の野菜を使った天ぷら盛り合わせ。数量限定です。</p>
+            <Link
+              to="/menu/lunch"
+              className="inline-block mt-4 bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors"
+            >
+              ランチメニューを見る
+            </Link>
+          </div>
+        )}
       </section>
 
       {/* Featured menus */}
