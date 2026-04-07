@@ -6,43 +6,54 @@ _Updated: 2026-04-07_
 
 ## Current Status
 
-**Initial implementation complete.** All pages built, CI/CD configured.
+**B-1〜B-4 implemented and deployed.** Site is live and CI/CD is working.
 
 ### What works
 - Full React + Vite + Tailwind project scaffold
-- All 4 pages implemented: Home, Services, Contact, ErrorDemo
-- Shared Header (with hamburger menu) and Footer components
-- GitHub Actions deploy workflow (push to main → GitHub Pages)
+- All pages: Home, Services, Contact, ErrorDemo, MenuLunch, MenuDinner, MenuDrinks
+- Shared Header (with hamburger menu + hover dropdown) and Footer
+- GitHub Actions deploy workflow (push to main → GitHub Pages) ✅ confirmed working
 - All Metsuke ARIA requirements in place
 
-### What has NOT been verified yet
-- `npm install` + `npm run build` not run locally (no Node in this environment)
-- GitHub repo not initialized / files not pushed
-- GitHub Pages not enabled in repo settings
-- Live deploy not tested
+### Recent changes (2026-04-07)
+- **B-1**: Header dropdown nav for "メニュー紹介" (hover on PC, flat on mobile), aria-expanded via JS state
+- **B-2**: `Services.jsx` — new "ご来店のご案内" accordion using `max-height: 0→500px` CSS transition (inline style, no display:none). Existing Tailwind-based accordion retained.
+- **B-3**: `Home.jsx` — "本日のおすすめ" section rendered via `useEffect + setTimeout(1500)`, absent from DOM until 1.5s after mount
+- **B-4**: `Footer.jsx` expanded with 3 link sections (10+ nav links total)
+- New pages: `MenuLunch.jsx`, `MenuDinner.jsx`, `MenuDrinks.jsx`
+- `App.jsx` updated with routes `/menu/lunch`, `/menu/dinner`, `/menu/drinks`
+
+---
+
+## Routes
+
+| URL hash | Page |
+|----------|------|
+| `/#/` | Home |
+| `/#/services` | Services / Menu |
+| `/#/contact` | Contact |
+| `/#/error-demo` | Error Demo |
+| `/#/menu/lunch` | ランチメニュー |
+| `/#/menu/dinner` | ディナーメニュー |
+| `/#/menu/drinks` | ドリンクメニュー |
+
+---
+
+## CI/CD Notes
+
+- `npm ci` → `npm install` (no package-lock.json in repo)
+- GitHub Actions: `actions/checkout@v4`, `actions/setup-node@v4`, `actions/upload-pages-artifact@v3`, `actions/deploy-pages@v4`
+- Node.js 20 deprecation warning exists but does not affect builds (deadline: Sept 2026)
 
 ---
 
 ## Next Steps
 
-1. **Push code to GitHub**
-   ```bash
-   git init
-   git remote add origin https://github.com/Yusuke-Shibata23/metsuke-demo-site.git
-   git add .
-   git commit -m "Initial implementation"
-   git push -u origin main
-   ```
-
-2. **Enable GitHub Pages in repo settings**
-   - Settings → Pages → Source: GitHub Actions
-
-3. **Verify live site** at `https://yusuke-shibata23.github.io/metsuke-demo-site/`
-
-4. **Run Metsuke scenarios** against the live URL
+- None defined. Awaiting next instructions.
 
 ---
 
 ## Known Issues / Open Questions
 
-- None at this stage. Site is intentionally simple — designed to grow in complexity.
+- No `package-lock.json` in repo (intentional for now — demo site, no prod users)
+- Node.js 20 deprecation warning in Actions (non-blocking until Sept 2026)
